@@ -1,0 +1,7 @@
+apiVersion: v2
+description: Base Platform Baseline Helmfile for Base Applications Only
+maintainers:
+- email: PDLTICKETM@pdl.internal.ericsson.com
+  name: Ticketmaster
+name: base-platform-baseline
+version: 0.626.0

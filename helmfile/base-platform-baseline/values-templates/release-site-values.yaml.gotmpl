@@ -1,0 +1,6 @@
+# Imports release site-values for which they are applied.
+# This is a YAML-formatted file.
+
+{{ if hasKey .Values .Release.Name }}
+{{ .Values | get .Release.Name | toYaml }}
+{{ end }}

@@ -1,0 +1,29 @@
+global:
+  hosts:
+    iam: "iam-dummy.ericsson.se"
+    gas: "gas-dummy.ericsson.se"
+    la: "la-dummy.ericsson.se"
+  registry:
+    # If deploying from the director node on a CCD environment, the url can be retrieved using:
+    # kubectl get ingress eric-lcm-container-registry-ingress -n kube-system -o jsonpath="{.spec.tls[*].hosts[0]}"; echo
+    url: "armdocker.rnd.ericsson.se"
+    # Docker registry username
+    username: "dummy"
+    # Docker registry password
+    password: "dummy"
+eric-cnbase-oss-config:
+  enabled: true
+eric-oss-common-base:
+  gas:
+    defaultUser:
+      username: 'gas-user'
+      password: 'Ericsson123!'
+  service-mesh-ingress-gateway:
+    service:
+      loadBalancerIP: '10.10.10.10'
+  eric-gr-bur-orchestrator:
+    enabled: false
+  system-user:
+    credentials:
+      username: 'system-user'
+      password: 'Ericsson123!'

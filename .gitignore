@@ -1,0 +1,31 @@
+# Compiled source #
+*.class
+*/bin/*
+# Eclipse files
+.project
+.classpath
+.settings
+.metadata
+# IntelliJ IDEA files
+.idea
+*.iws
+*.ipr
+*.iml
+*.patch
+# Packages
+*.jar
+*.tar.gz
+*.tgz
+*.egg-info
+# PMD
+.pmd
+# Merge files
+*.orig
+#BOB Files
+.project_*
+*helm-target
+# Helm Files
+charts.lock
+charts/*/charts/
+# Python
+__pycache__

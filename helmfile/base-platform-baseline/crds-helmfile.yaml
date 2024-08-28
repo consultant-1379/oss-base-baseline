@@ -1,0 +1,61 @@
+bases:
+  - repositories.yaml
+
+releases:
+  - name: eric-tm-ingress-controller-cr-crd
+    namespace: dummy
+    chart: {{ .Values | get "repository" "adp-gs-all" }}/eric-tm-ingress-controller-cr-crd
+    labels:
+        project: eric-eiae-helmfile
+    version: 11.3.0+59
+    values:
+      - "./values-templates/global-values.yaml.gotmpl"
+      - "./values-templates/release-site-values.yaml.gotmpl"
+
+  - name: eric-mesh-controller-crd
+    namespace: dummy
+    chart: {{ .Values | get "repository" "adp-gs-all" }}/eric-mesh-controller-crd
+    version: 14.0.0+73
+    values:
+      - "./values-templates/global-values.yaml.gotmpl"
+      - "./values-templates/release-site-values.yaml.gotmpl"
+
+  - name: eric-sec-sip-tls-crd
+    namespace: dummy
+    chart: {{ .Values | get "repository" "adp-gs-all" }}/eric-sec-sip-tls-crd
+    version: 6.1.0+1
+    values:
+      - "./values-templates/global-values.yaml.gotmpl"
+      - "./values-templates/release-site-values.yaml.gotmpl"
+
+  - name: eric-sec-certm-crd
+    namespace: dummy
+    chart: {{ .Values | get "repository" "adp-gs-all" }}/eric-sec-certm-crd
+    version: 5.0.0+18
+    values:
+      - "./values-templates/global-values.yaml.gotmpl"
+      - "./values-templates/release-site-values.yaml.gotmpl"
+
+  - name: eric-data-key-value-database-rd-crd
+    namespace: dummy
+    chart: {{ .Values | get "repository" "adp-gs-all" }}/eric-data-key-value-database-rd-crd
+    version: 2.0.0+7
+    values:
+      - "./values-templates/global-values.yaml.gotmpl"
+      - "./values-templates/release-site-values.yaml.gotmpl"
+
+  - name: eric-data-wide-column-database-cd-crd
+    namespace: {{ .Values | get "helmfile.crd.namespace" "eric-crd-ns" }}
+    chart: {{ .Values | get "repository" "adp-gs-all" }}/eric-data-wide-column-database-cd-crd
+    version: 1.25.0+55
+    values:
+      - "./values-templates/global-values.yaml.gotmpl"
+      - "./values-templates/release-site-values.yaml.gotmpl"
+
+  - name: eric-sec-access-mgmt-crd
+    namespace: dummy
+    chart: {{ .Values | get "repository" "adp-gs-all" }}/eric-sec-access-mgmt-crd
+    version: 1.1.0+1
+    values:
+      - "./values-templates/global-values.yaml.gotmpl"
+      - "./values-templates/release-site-values.yaml.gotmpl"

@@ -1,0 +1,31 @@
+global:
+  hosts:
+    iam: ""
+    gas: ""
+    la: ""
+  registry:
+    # If deploying from the director node on a CCD environment, the url can be retrieved using:
+    # kubectl get ingress eric-lcm-container-registry-ingress -n kube-system -o jsonpath="{.spec.tls[*].hosts[0]}"; echo
+    url: ""
+    # Docker registry username
+    username: ""
+    # Docker registry password
+    password: ""
+
+eric-cnbase-oss-config:
+  enabled: true
+
+eric-oss-common-base:
+  gas:
+    defaultUser:
+      username: ''
+      password: ''
+  service-mesh-ingress-gateway:
+    service:
+      loadBalancerIP: ''
+  eric-gr-bur-orchestrator:
+    enabled: false
+  system-user:
+    credentials:
+      username: ''
+      password: ''

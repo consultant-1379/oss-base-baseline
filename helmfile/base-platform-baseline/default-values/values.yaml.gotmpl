@@ -1,0 +1,259 @@
+global:
+  iam:
+    clientId: eo
+    adminSecret: eric-sec-access-mgmt-creds
+    tlsSecret: iam-tls-secret
+    userKey: kcadminid
+    passwordKey: kcpasswd
+  pullSecret: "k8s-registry-secret"
+  security:
+    tls:
+      enabled: false
+    sasl:
+      enabled: true
+    oauth:
+      enabled: false
+    outboundPolicy:
+      registryOnly:
+        enabled: false
+  securityPolicy:
+    rolekind: ClusterRole
+  networkPolicy:
+    enabled: true
+  ingressClass: "oss_iccr"
+  iccrAppIngresses: false
+  serviceMesh:
+    enabled: true
+    revision: "a"
+  log:
+    streamingMethod: "indirect"
+  # This flag will be enabled once services are migrated to certm and pipeline adaption is completed
+  useCertMOnboarding: false
+
+tags:
+  sef: false
+
+eric-cloud-native-base:
+  enabled: true
+  #This below snippet eric-lm-combined-server will deleted once LM config is added to site-values-template.yaml file
+
+  eric-pm-server:
+    server:
+      persistentVolume:
+        enabled: true
+        size: 15Gi
+      extraArgs:
+        storage.tsdb.retention.size: 13GB
+    resources:
+      eric-pm-server:
+        limits:
+          cpu: "1"
+          memory: "6Gi"
+        requests:
+          cpu: "400m"
+          memory: "5Gi"
+      eric-pm-configmap-reload:
+        limits:
+          cpu: "5m"
+          memory: "100Mi"
+        requests:
+          cpu: "1m"
+          memory: "100Mi"
+      eric-pm-exporter:
+        limits:
+          cpu: "5m"
+          memory: "100Mi"
+        requests:
+          cpu: "1m"
+          memory: "100Mi"
+    log:
+      format: json
+
+  eric-lm-combined-server:
+    licenseServerClient:
+      licenseServer:
+        thrift:
+          # Please provide following mandatory value when License Manager service is enabled
+          # Mandatory: licenseServerClient.licenseServer.thrift.host - The NELS thrift server address or service name
+          host: ""
+  eric-dst-collector:
+    samplingStrategiesReloadInterval: "30s"
+    log:
+      format: "json"
+  eric-data-object-storage-mn:
+    resources:
+      server:
+        limits:
+          cpu: '2000m'
+        requests:
+          cpu: '500m'
+  eric-odca-diagnostic-data-collector:
+    env:
+      enableInitialConfig: true
+    service:
+      replicas: 0
+    kubernetesInfo:
+      enabled: true
+    helmInfo:
+      enabled: true
+    resources:
+      diagnostic-data-collector-manual:
+        requests:
+          ephemeral-storage: 15Gi # Search Engine storage size + 5G to guarantee the tgz compression.
+        limits:
+          ephemeral-storage: 20Gi
+secret-eric-data-object-storage-mn:
+  enabled: true
+
+eric-cnbase-oss-config:
+  enabled: true
+  alertRules: {}
+  configAlertRules:
+    alarmConfigurationParameters:
+      documentDatabasePg:
+        diskSpaceThreshold: 80 # %rate
+        holdOnOffTime: 3 # minutes
+        severity: Major
+      dataSearchEngine:
+        volumeThreshold: 80 # %rate
+        volumeHoldOnOffTime: 3 # minutes
+        volumeSeverity: Major
+        missingPShardHoldOnOffTime: 3 # minutes
+        missingPShardSeverity: Major
+        missingReplicaHoldOnOffTime: 3 # minutes
+        missingReplicaSeverity: Major
+      dataObjectStorageMn:
+        diskSpaceThreshold: 80 # %rate
+        diskSpaceholdOnOffTime: 3 # minutes
+        diskSpaceSeverity: Major
+        diskOfflineThreshold: 30 # %rate
+        diskOfflineholdOnOffTime: 3 # minutes
+        diskOfflineSeverity: Major
+      diagnosticDataCollector:
+        diskSpaceThreshold: 80 # %rate
+        diskSpaceholdOnOffTime: 3 # minutes
+        diskSpaceSeverity: Major
+        dataTransferSpeedHoldOnOffTime: 0 # minutes
+        dataTransferSpeedSeverity: Warning
+        dataExportFailureThreshold: 3 # attempts
+        dataExportFailureMonitorTime: 15 # minutes
+        dataExportFailureHoldOnOffTime: 0 # minutes
+        dataExportFailureSeverity: Major
+      backupAndRestoreOrchestrator:
+        diskSpaceThreshold: 80 # %rate
+        holdOnOffTime: 3 # minutes
+        volumeSeverity: Major
+        noSuccessfulBackupDaysThreshold: 1 # days
+        noSuccessfulBackupDaysSeverity: Warning
+        exportBackupOperationFailedSeverity: Major
+        createBackupOperationFailedSeverity: Major
+        restoreBackupOperationFailedSeverity: Major
+        deleteBackupOperationFailedSeverity: Major
+      pmServer:
+        diskSpaceThreshold: 80 # %rate
+        diskSpaceholdOnOffTime: 3 # minutes
+        diskSpaceSeverity: Major
+        containerMemoryThreshold: 80 # %rate
+        containerMemoryHoldOffTime: 3 # minutes
+        containerMemorySeverity: Warning
+        containerCpuThreshold: 80 # %rate
+        containerCpuHoldOffTime: 3 # minutes
+        containerCpuSeverity: Warning
+      distributedCoordinatorEd:
+        diskSpaceThreshold: 80 # %rate
+        holdOnOffTime: 3 # minutes
+        severity: Major
+  psp-role-binding:
+    enabled: true
+
+eric-eic-common-base-config:
+  enabled: true
+
+eric-oss-common-base:
+  enabled: true
+  ingress:
+    enabled: false
+  eric-cnom-server:
+    productName: System Monitor
+    productNameShort: SM
+    documentDatabasePg:
+      enabled: true
+      host: eric-cnom-server-database-pg
+      database: cnom
+      secret: eric-eo-database-pg-secret
+      tls:
+        ca: eric-sec-sip-tls-trusted-root-cert
+        key: eric-cnom-server-document-database-pg-client-cert
+        cert: eric-cnom-server-document-database-pg-client-cert
+  eric-cnom-server-database-pg:
+    enabled: true
+  eric-adp-gui-aggregator-service:
+    configuration:
+      helpAggregator:
+        enabled: true
+
+eric-cncs-oss-config:
+  enabled: true
+  ingress:
+    enabled: false
+
+eric-oss-adc:
+  enabled: true
+  ingress:
+    enabled: false
+
+eric-oss-app-mgr:
+  enabled: true
+  ingress:
+    enabled: false
+  eric-lcm-container-registry:
+    ingress:
+      enabled: false
+
+eric-topology-handling:
+  enabled: true
+  eric-oss-common-topology-svc:
+    eric-oss-cmn-topology-svc-core:
+      useGasHost:
+        enabled: true
+  eric-oss-common-topology-ui:
+    enabled: true
+
+eric-oss-ericsson-adaptation:
+  enabled: true
+  eric-oss-ran-topology-adapter:
+    apiGatewayRoute:
+        systemUser:
+            name: eric-oss-common-base-system-user-secret
+
+eric-oss-oran-support:
+  enabled: true
+  eric-oss-a1-policy-mngmt-svc:
+    api-gateway-route:
+      credentials:
+        name: eric-oss-common-base-system-user-secret
+
+eric-cloud-native-service-mesh:
+  enabled: true
+
+eric-oss-dmm:
+  enabled: true
+
+eric-oss-pm-stats-calc-handling:
+  enabled: true
+
+eric-oss-ml-execution-env:
+  enabled: true
+
+eric-topology-exposure-handling:
+  enabled: true
+
+eric-oss-config-handling:
+  enabled: true
+
+eric-service-exposure-framework:
+  eric-log-shipper:
+    enabled: false
+
+eric-oss-connected-systems-registry:
+  enabled: true

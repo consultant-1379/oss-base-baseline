@@ -1,0 +1,13 @@
+repositories:
+  - name: adp-umbrella-released
+    url: https://arm.sero.gic.ericsson.se/artifactory/proj-adp-umbrella-released-helm/
+    username: {{ env "GERRIT_USERNAME" }}
+    password: {{ env "GERRIT_PASSWORD" }}
+  - name: eric-oss-drop
+    url: https://arm.seli.gic.ericsson.se/artifactory/proj-eric-oss-drop-helm-local
+    username: {{ env "GERRIT_USERNAME" }}
+    password: {{ env "GERRIT_PASSWORD" }}
+  - name: adp-gs-all
+    url: https://arm.sero.gic.ericsson.se/artifactory/proj-adp-gs-all-helm
+    username: {{ env "GERRIT_USERNAME" }}
+    password: {{ env "GERRIT_PASSWORD" }}

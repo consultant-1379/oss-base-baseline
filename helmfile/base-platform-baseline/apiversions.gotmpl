@@ -1,0 +1,6 @@
+{{ if env "KUBE_API_VERSIONS" }}
+apiVersions:
+    {{- range $apiVersion := ( env "KUBE_API_VERSIONS" | split "," ) }}
+    - {{ $apiVersion }}
+    {{- end }}
+{{ end }}

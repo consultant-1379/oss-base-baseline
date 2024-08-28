@@ -1,0 +1,62 @@
+bases:
+  - environment.yaml
+  - repositories.yaml
+  - apiversions.gotmpl
+
+---
+
+releases:
+  - name: eric-storage-encryption-provider
+    namespace: {{ .Values | get "helmfile.app.namespace" "eric-app-ns" }}
+    chart: {{ .Values | get "repository" "eric-oss-drop" }}/eric-storage-encryption-provider
+    labels:
+        project: eric-eiae-helmfile
+    version: 0.28.0
+    values:
+      - "./values-templates/global-values.yaml.gotmpl"
+      - "./values-templates/release-site-values.yaml.gotmpl"
+
+  - name: eric-service-exposure-framework
+    namespace: {{ .Values | get "helmfile.app.namespace" "eric-app-ns" }}
+    chart: {{ .Values | get "repository" "eric-oss-drop" }}/eric-service-exposure-framework
+    labels:
+        project: eric-eiae-helmfile eric-eo-helmfile
+    version: 0.86.0
+    values:
+      - "./values-templates/global-values.yaml.gotmpl"
+      - "./values-templates/release-site-values.yaml.gotmpl"
+
+  - name: eric-cloud-native-service-mesh
+    namespace: {{ .Values | get "helmfile.app.namespace" "eric-app-ns" }}
+    chart: {{ .Values | get "repository" "adp-umbrella-released" }}/eric-cloud-native-service-mesh
+    version: 16.8.0
+
+  - name: eric-cnbase-oss-config
+    namespace: {{ .Values | get "helmfile.app.namespace" "eric-app-ns" }}
+    chart: {{ .Values | get "repository" "eric-oss-drop" }}/eric-cnbase-oss-config
+    version: 1.32.0
+    values:
+      - "./values-templates/global-values.yaml.gotmpl"
+      - "./values-templates/release-site-values.yaml.gotmpl"
+
+  - name: eric-cloud-native-base
+    namespace: {{ .Values | get "helmfile.app.namespace" "eric-app-ns" }}
+    chart: {{ .Values | get "repository" "adp-umbrella-released" }}/eric-cloud-native-base
+    version: 184.25.0
+
+  - name: eric-cncs-oss-config
+    namespace: {{ .Values | get "helmfile.app.namespace" "eric-app-ns" }}
+    chart: {{ .Values | get "repository" "eric-oss-drop" }}/eric-cncs-oss-config
+    version: 0.88.0
+    values:
+      - "./values-templates/global-values.yaml.gotmpl"
+
+  - name: eric-oss-common-base
+    namespace: {{ .Values | get "helmfile.app.namespace" "eric-app-ns" }}
+    chart: {{ .Values | get "repository" "eric-oss-drop" }}/eric-oss-common-base
+    version: 0.754.0
+    values:
+      - "./values-templates/global-values.yaml.gotmpl"
+      - "./values-templates/release-site-values.yaml.gotmpl"
+
+
